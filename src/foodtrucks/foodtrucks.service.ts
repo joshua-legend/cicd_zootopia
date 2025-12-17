@@ -29,7 +29,7 @@ export class FoodtrucksService {
   }
 
   findAll() {
-    return `This action returns all foodtrucks`;
+    return this.foodTruckRepository.find();
   }
 
   findOne(id: number) {

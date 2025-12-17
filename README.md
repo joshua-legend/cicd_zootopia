@@ -6,4 +6,4 @@ DB-first 가져옴
 1. 리소스 만듬
 2. 유효성 체크
 3. 디비 연동
-4.
+4. Response API Formatter
