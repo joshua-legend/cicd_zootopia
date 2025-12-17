@@ -2,33 +2,29 @@ import { Zookeeper } from 'src/zookeepers/entities/zookeeper.entity';
 import {
   Column,
   Entity,
-  ForeignKey,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-// 하나의 조련사는 여러 동물을 관리한다. (1:N)
-// 하나의 동물은 하나의 조련사에 의해 관리된다.
-
-@Entity()
+@Entity('animal', { schema: 'zoo' })
 export class Animal {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'int', name: 'id' })
   id: number;
 
-  @Column()
+  @Column('varchar', { name: 'name', length: 255 })
   name: string;
 
-  @Column()
+  @Column('varchar', { name: 'systematics', length: 255 })
   systematics: string;
 
-  @Column()
+  @Column('int', { name: 'count' })
   count: number;
 
-  @Column({ name: 'zookeeper_id' })
-  zookeeper_id: number;
-
-  @ManyToOne(() => Zookeeper, (z) => z.animals, { nullable: false })
-  @JoinColumn({ name: 'zookeeper_id' })
+  @ManyToOne(() => Zookeeper, (zookeeper) => zookeeper.animals, {
+    onDelete: 'NO ACTION',
+    onUpdate: 'NO ACTION',
+  })
+  @JoinColumn([{ name: 'zookeeper_id', referencedColumnName: 'id' }])
   zookeeper: Zookeeper;
 }

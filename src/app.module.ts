@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AnimalsModule } from './animals/animals.module';
 import { ZookeepersModule } from './zookeepers/zookeepers.module';
+import { AreasModule } from './areas/areas.module';
+import { FoodtrucksModule } from './foodtrucks/foodtrucks.module';
 
 @Module({
   imports: [
@@ -14,11 +16,12 @@ import { ZookeepersModule } from './zookeepers/zookeepers.module';
       username: 'root',
       password: '1234',
       database: 'zoo', // DB 이름
-      synchronize: true, // 개발 환경에서만 true (자동 테이블 생성)
       entities: [__dirname + '/**/*.entity{.ts,.js}'], // 전체 엔티디 등록
     }),
     AnimalsModule,
     ZookeepersModule,
+    AreasModule,
+    FoodtrucksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

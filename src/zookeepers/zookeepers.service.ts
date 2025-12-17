@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateZookeeperDto } from './dto/create-zookeeper.dto';
 import { UpdateZookeeperDto } from './dto/update-zookeeper.dto';
 import { Zookeeper } from './entities/zookeeper.entity';
@@ -25,7 +25,8 @@ export class ZookeepersService {
     const result = await this.zookeeperRepository.findOne({
       where: { id },
     });
-    return result ?? '그런 주키퍼 없음';
+    if (!result) throw new NotFoundException('그런 주키퍼 없음 ㅋㅋ');
+    return result;
   }
 
   update(id: number, updateZookeeperDto: UpdateZookeeperDto) {
@@ -36,7 +37,7 @@ export class ZookeepersService {
     const result = await this.zookeeperRepository.findOne({
       where: { id: id },
     });
-    if (!result) return '그런 주키퍼 없음';
+    if (!result) throw new NotFoundException('그런 주키퍼 없음 ㅋㅋ');
     await this.zookeeperRepository.remove(result);
     return `${result.name}이 삭제되었습니다.`;
   }
